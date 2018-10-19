@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:path/path.dart';
-import 'package:http/http.dart'  as http;
-import 'dart:async';
 
 class LinerDetailsScreen extends StatelessWidget {
   final String linerId;
@@ -13,7 +9,6 @@ class LinerDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[400],
         title: Text("Liner Information"),
       ),
       body: linerDetailListView(),
