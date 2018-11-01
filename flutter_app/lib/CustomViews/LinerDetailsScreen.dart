@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Networking/LinerInformationRequest.dart';
 
 class LinerDetailsScreen extends StatelessWidget {
-  final String linerId;
+  final Liner liner;
 
-  LinerDetailsScreen({Key key, @required this.linerId}) : super(key: key);
+  LinerDetailsScreen({Key key, @required this.liner}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red[400],
         title: Text("Liner Information"),
       ),
       body: linerDetailListView(),
