@@ -89,11 +89,8 @@ class MyCustomFormState extends State<MyCustomForm> {
         await loginRequest(userNameController.text, passwordController.text);
     updateState(false);
     if (response.statusCode == 200) {
-      Navigator.push (
-        context,
-        MaterialPageRoute(
-            fullscreenDialog: true,
-             builder: (context) => RapidArmorHomeListView()),
+      Navigator.pop (
+        context
       );
     }
   }

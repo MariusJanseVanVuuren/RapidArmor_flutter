@@ -10,9 +10,10 @@ Future<http.Response> loginRequest(String email, String password) async {
     'session' : { 'email': email, 'password': password, 'remember_me' : '1'}
   });
   Map<String, String> headers = {
-    'Content-type' : 'application/json'
+    'Content-type' : 'application/json',
   };
   final response = await http.post(url, body: body, headers: headers);
+
   final responseJson = json.decode(response.body);
   print(responseJson);
   secureStorage().write(key: "token", value: responseJson["token"]);

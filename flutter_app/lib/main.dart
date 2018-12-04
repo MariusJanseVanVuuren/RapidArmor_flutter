@@ -15,9 +15,7 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Rapid Armor',
-      home: LoginView(),
+      home: RapidArmorHomeListView(),
     )
   );
 }
-
-

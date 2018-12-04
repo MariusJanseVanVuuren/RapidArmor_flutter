@@ -1,9 +1,8 @@
 import 'package:flutter_app/main.dart';
-import 'LinerDetailsScreen.dart';
-import 'dart:async';
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/CustomViews/LinerNumberInputScreen.dart';
+import 'package:flutter_app/CustomViews/ReplaceLinerNumberInputScreen.dart';
+import 'SwapLinerNumberInputScreen.dart';
 
 class CustomListTile extends StatelessWidget {
   final HomeListViewItem rowItem;
@@ -28,6 +27,21 @@ class CustomListTile extends StatelessWidget {
     );
   }
 
+  void displayReplaceLinerNumbersScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ReplaceLinerInputScreen()),
+    );
+  }
+
+  void displaySwapLinerNumbersScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => SwapLinerInputScreen()),
+    );
+  }
 
   Widget materialContainer(HomeListViewItem rowItem, BuildContext context) {
     String rowText;
@@ -40,15 +54,15 @@ class CustomListTile extends StatelessWidget {
         break;
       case (HomeListViewItem.ReplaceLiner):
         rowText = 'Replace Liner';
-        functionForRowItem = displayEnterLinerScreen;
+        functionForRowItem = displayReplaceLinerNumbersScreen;
         break;
       case (HomeListViewItem.MeasureLiner):
         rowText = 'Measure Liner';
-        functionForRowItem = displayEnterLinerScreen;
+        functionForRowItem = displayEnterLinerScreen; // TODO
         break;
       case (HomeListViewItem.ChangeLinerLocation):
         rowText = 'Change Liner Position';
-        functionForRowItem = displayEnterLinerScreen;
+        functionForRowItem = displaySwapLinerNumbersScreen;
         break;
       default:
         break;

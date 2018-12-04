@@ -1,41 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/CustomViews/textField.dart';
 import 'package:flutter_app/Networking/LinerInformationRequest.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/CustomViews/LinerDetailsScreen.dart';
-import 'package:path/path.dart';
-import 'package:flutter_app/CustomViews/RapidArmorHomeListView.dart';
 import 'dart:convert';
+import 'package:flutter_app/CustomViews/textField.dart';
 
-class StatelessLinertNumberInputScreen extends StatelessWidget {
+class StatelessSwapLinerInputScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return statefullLinertNumberInputScreen();
+    return statefullSwapLinertInputScreen();
   }
 
-  Widget statefullLinertNumberInputScreen() {
+  Widget statefullSwapLinertInputScreen() {
     return Container(
       color: Colors.white,
       child: ListView(
         children: <Widget>[
-          LinerNumberInputScreen(),
+          SwapLinerInputScreen(),
         ],
       ),
     );
   }
 }
 
-class LinerNumberInputScreen extends StatefulWidget {
+class SwapLinerInputScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return LinerNumberInputScreenState();
+    return SwapLinersInputScreenState();
   }
 }
 
-class LinerNumberInputScreenState extends State<LinerNumberInputScreen> {
-  LinerNumberInputScreenState({key: Key});
-
-  final linerNumberTextFieldController = TextEditingController();
+class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
+  final previousLinerNumberTextFieldController = TextEditingController();
+  final newLinerNumberTextFieldController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -43,19 +40,32 @@ class LinerNumberInputScreenState extends State<LinerNumberInputScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red[400],
-          title: Text('Rapid Armor'),
+          title: Text('Swap Liners'),
           actions: <Widget>[confirmButton(context)],
         ),
-        body: inputView());
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[previousLinerInputView(), newLinerInputView()],
+        ));
   }
 
-  Widget inputView() {
+  Widget previousLinerInputView() {
     return Container(
       decoration: new BoxDecoration(
           border: new BorderDirectional(
               bottom: BorderSide(color: Colors.grey[400]))),
-      child: textField(linerNumberTextFieldController, false,
-          "Please enter the number on the liner", "Liner Number :", null),
+      child: textField(previousLinerNumberTextFieldController, false,
+          "Previous Liner Number", "Liner Number :", null),
+    );
+  }
+
+  Widget newLinerInputView() {
+    return Container(
+      decoration: new BoxDecoration(
+          border: new BorderDirectional(
+              bottom: BorderSide(color: Colors.grey[400]))),
+      child: textField(newLinerNumberTextFieldController, false,
+          "New Liner Number ", "Liner Number :", null),
     );
   }
 
@@ -68,8 +78,9 @@ class LinerNumberInputScreenState extends State<LinerNumberInputScreen> {
   }
 
   void performLinerInformationRequest(BuildContext context) async {
-    http.Response response =
-        await linerInformationRequest(linerNumberTextFieldController.text);
+    http.Response response = await replaceLinerRequest(
+        previousLinerNumberTextFieldController.text,
+        newLinerNumberTextFieldController.text);
     if (response.statusCode == 200) {
       var responseJson = json.decode(response.body);
       Liner liner = Liner.fromJson(responseJson);
