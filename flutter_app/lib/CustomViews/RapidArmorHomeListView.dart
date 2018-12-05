@@ -27,7 +27,9 @@ class _HomeListViewState extends State<RapidArmorHomeListView> {
       HomeListViewItem.LocateLiner,
       HomeListViewItem.ReplaceLiner,
       HomeListViewItem.MeasureLiner,
-      HomeListViewItem.ChangeLinerLocation
+      HomeListViewItem.ChangeLinerLocation,
+      HomeListViewItem.empty,
+      HomeListViewItem.AugmentLink
     ];
 
     List<Widget> widgets = [];

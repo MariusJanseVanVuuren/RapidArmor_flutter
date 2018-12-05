@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 
 Future<http.Response> loginRequest(String email, String password) async {
-  var url = "http://0.0.0.0:3000/login";
+  var url = "https://rapidarmor.herokuapp.com/login";
   var body = json.encode({
     'session' : { 'email': email, 'password': password, 'remember_me' : '1'}
   });
@@ -13,7 +13,7 @@ Future<http.Response> loginRequest(String email, String password) async {
     'Content-type' : 'application/json',
   };
   final response = await http.post(url, body: body, headers: headers);
-
+  print(response);
   final responseJson = json.decode(response.body);
   print(responseJson);
   secureStorage().write(key: "token", value: responseJson["token"]);

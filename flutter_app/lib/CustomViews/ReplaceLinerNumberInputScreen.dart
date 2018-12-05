@@ -57,7 +57,7 @@ class ReplaceLinerInputScreenState extends State<ReplaceLinerInputScreen> {
           border: new BorderDirectional(
               bottom: BorderSide(color: Colors.grey[400]))),
       child: textField(previousLinerNumberTextFieldController, false,
-          "Previous Liner Number", "Liner Number :", null),
+          "Liner Number", "Previous Liner Number", null),
     );
   }
 
@@ -67,7 +67,7 @@ class ReplaceLinerInputScreenState extends State<ReplaceLinerInputScreen> {
           border: new BorderDirectional(
               bottom: BorderSide(color: Colors.grey[400]))),
       child: textField(newLinerNumberTextFieldController, false,
-          "New Liner Number ", "Liner Number :", null),
+          "Liner Number", "New Liner Number", null),
     );
   }
 
@@ -75,7 +75,7 @@ class ReplaceLinerInputScreenState extends State<ReplaceLinerInputScreen> {
     if (isLoading == true) {
       return new Center(child: new CircularProgressIndicator());
     } else {
-      return new Center(child: Text("Confirm"));
+      return new Center(child: Text("Confirm", style: TextStyle(color: Colors.white)));
     }
   }
 
@@ -92,6 +92,8 @@ class ReplaceLinerInputScreenState extends State<ReplaceLinerInputScreen> {
               builder: (context) => LinerDetailsScreen(
                     liner: liner,
                   )));
+    } else {
+      _showDialog("Replacing liner failed", "Please double check the liner numbers or contact your supplier");
     }
   }
 
@@ -107,5 +109,28 @@ class ReplaceLinerInputScreenState extends State<ReplaceLinerInputScreen> {
     setState(() {
       isLoading = loading;
     });
+  }
+
+  void _showDialog(String title, String subtitle) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(title),
+          content: new Text(subtitle),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

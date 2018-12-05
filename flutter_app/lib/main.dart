@@ -6,7 +6,9 @@ enum HomeListViewItem {
   LocateLiner,
   ReplaceLiner,
   MeasureLiner,
-  ChangeLinerLocation
+  ChangeLinerLocation,
+  empty,
+  AugmentLink
 }
 
 void main() {

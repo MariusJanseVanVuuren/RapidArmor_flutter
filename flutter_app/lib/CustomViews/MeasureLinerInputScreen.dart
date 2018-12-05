@@ -5,34 +5,34 @@ import 'package:flutter_app/CustomViews/LinerDetailsScreen.dart';
 import 'dart:convert';
 import 'package:flutter_app/CustomViews/textField.dart';
 
-class StatelessSwapLinerInputScreen extends StatelessWidget {
+class StatelessMeasureLinerInputScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return statefullSwapLinertInputScreen();
+    return statefullMeasureLinertInputScreen();
   }
 
-  Widget statefullSwapLinertInputScreen() {
+  Widget statefullMeasureLinertInputScreen() {
     return Container(
       color: Colors.white,
       child: ListView(
         children: <Widget>[
-          SwapLinerInputScreen(),
+          MeasureLinerInputScreen(),
         ],
       ),
     );
   }
 }
 
-class SwapLinerInputScreen extends StatefulWidget {
+class MeasureLinerInputScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SwapLinersInputScreenState();
+    return MeasureLinersInputScreenState();
   }
 }
 
-class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
+class MeasureLinersInputScreenState extends State<MeasureLinerInputScreen> {
   final previousLinerNumberTextFieldController = TextEditingController();
-  final newLinerNumberTextFieldController = TextEditingController();
+  final linerMeasurementTextFieldController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -40,7 +40,7 @@ class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red[400],
-          title: Text('Swap Liners'),
+          title: Text('Measure Liners'),
           actions: <Widget>[confirmButton(context)],
         ),
         body: Column(
@@ -54,8 +54,8 @@ class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
       decoration: new BoxDecoration(
           border: new BorderDirectional(
               bottom: BorderSide(color: Colors.grey[400]))),
-      child: textField(previousLinerNumberTextFieldController, false,
-          "Previous Liner Number", "Liner Number :", null),
+      child: textField(previousLinerNumberTextFieldController, false, "Liner Number :",
+          "Liner Number", null),
     );
   }
 
@@ -64,8 +64,8 @@ class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
       decoration: new BoxDecoration(
           border: new BorderDirectional(
               bottom: BorderSide(color: Colors.grey[400]))),
-      child: textField(newLinerNumberTextFieldController, false,
-          "New Liner Number ", "Liner Number :", null),
+      child: textField(linerMeasurementTextFieldController, false,
+          "millimeters", "Measurement in millimeters :", null),
     );
   }
 
@@ -78,9 +78,9 @@ class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
   }
 
   void performLinerInformationRequest(BuildContext context) async {
-    http.Response response = await replaceLinerRequest(
+    http.Response response = await updateLinerMeasurementRequest(
         previousLinerNumberTextFieldController.text,
-        newLinerNumberTextFieldController.text);
+        linerMeasurementTextFieldController.text);
     if (response.statusCode == 200) {
       var responseJson = json.decode(response.body);
       Liner liner = Liner.fromJson(responseJson);
@@ -88,10 +88,10 @@ class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
           context,
           MaterialPageRoute(
               builder: (context) => LinerDetailsScreen(
-                    liner: liner,
-                  )));
+                liner: liner,
+              )));
     } else {
-      _showDialog("Swapping liner failed", "Please double check the liner number or contact your supplier");
+      _showDialog("Measuring liner failed", "Please double check the liner number and ensure you have enetred the liner measurement in millimeters or contact your supplier");
     }
   }
 
@@ -111,7 +111,6 @@ class SwapLinersInputScreenState extends State<SwapLinerInputScreen> {
 
   void _showDialog(String title, String subtitle) {
     // flutter defined function
-    print("I am here now");
     showDialog(
       context: context,
       builder: (BuildContext context) {

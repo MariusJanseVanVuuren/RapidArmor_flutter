@@ -46,9 +46,19 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   final passwordController = TextEditingController();
 
+  var loginButton;
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey we created above
+
+    loginButton = RaisedButton(
+        onPressed: performLoginAction,
+        color: Colors.red,
+        padding: const EdgeInsets.all(8.0),
+        child: raisedButtonContent());
+
+
     return Form(
         key: _formKey,
         child: Column(
@@ -64,11 +74,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               children: [
                 Padding(
                     padding: EdgeInsets.all(50.0),
-                    child: RaisedButton(
-                        onPressed: performLoginAction,
-                        color: Colors.red,
-                        padding: const EdgeInsets.all(8.0),
-                        child: raisedButtonContent()))
+                    child: loginButton)
               ],
             )
           ],
@@ -86,12 +92,14 @@ class MyCustomFormState extends State<MyCustomForm> {
   void performLoginAction() async {
     updateState(true);
     http.Response response =
-        await loginRequest(userNameController.text, passwordController.text);
-    updateState(false);
+    await loginRequest(userNameController.text, passwordController.text);
     if (response.statusCode == 200) {
-      Navigator.pop (
-        context
+      Navigator.pop(
+          context
       );
+    } else {
+      updateState(false);
+      _showDialog("Login Failed", "Please check you username and passord");
     }
   }
 
@@ -100,4 +108,28 @@ class MyCustomFormState extends State<MyCustomForm> {
       isLoading = loading;
     });
   }
+
+  void _showDialog(String title, String subtitle) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(title),
+          content: new Text(subtitle),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
+

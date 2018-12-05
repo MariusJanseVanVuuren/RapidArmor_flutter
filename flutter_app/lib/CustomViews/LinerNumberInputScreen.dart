@@ -3,8 +3,6 @@ import 'package:flutter_app/CustomViews/textField.dart';
 import 'package:flutter_app/Networking/LinerInformationRequest.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/CustomViews/LinerDetailsScreen.dart';
-import 'package:path/path.dart';
-import 'package:flutter_app/CustomViews/RapidArmorHomeListView.dart';
 import 'dart:convert';
 
 class StatelessLinertNumberInputScreen extends StatelessWidget {
@@ -63,7 +61,8 @@ class LinerNumberInputScreenState extends State<LinerNumberInputScreen> {
     if (isLoading == true) {
       return new Center(child: new CircularProgressIndicator());
     } else {
-      return new Center(child: Text("Confirm"));
+      return new Center(
+          child: Text("Confirm", style: TextStyle(color: Colors.white)));
     }
   }
 
@@ -79,6 +78,9 @@ class LinerNumberInputScreenState extends State<LinerNumberInputScreen> {
               builder: (context) => LinerDetailsScreen(
                     liner: liner,
                   )));
+    } else {
+      _showDialog("Retreiving liner data failed",
+          "Please double check the liner number or contact your supplier");
     }
   }
 
@@ -94,5 +96,27 @@ class LinerNumberInputScreenState extends State<LinerNumberInputScreen> {
     setState(() {
       isLoading = loading;
     });
+  }
+
+  void _showDialog(String title, String subtitle) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(title),
+          content: new Text(subtitle),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

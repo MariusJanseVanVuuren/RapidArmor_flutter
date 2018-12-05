@@ -1,8 +1,10 @@
 import 'package:flutter_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/CustomViews/LinerNumberInputScreen.dart';
-import 'package:flutter_app/CustomViews/ReplaceLinerNumberInputScreen.dart';
+import 'LinerNumberInputScreen.dart';
+import 'ReplaceLinerNumberInputScreen.dart';
 import 'SwapLinerNumberInputScreen.dart';
+import 'MeasureLinerInputScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomListTile extends StatelessWidget {
   final HomeListViewItem rowItem;
@@ -43,6 +45,31 @@ class CustomListTile extends StatelessWidget {
     );
   }
 
+  void displayMeasureLinerInputScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MeasureLinerInputScreen()),
+    );
+  }
+
+  void openAugmentForLiner(BuildContext context) {
+    _launchURL();
+  }
+
+  _launchURL() async {
+    const url = 'https://agmt.it/m/aYRQjjUt';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  void empty() {
+
+  }
+
   Widget materialContainer(HomeListViewItem rowItem, BuildContext context) {
     String rowText;
     Function functionForRowItem;
@@ -58,13 +85,19 @@ class CustomListTile extends StatelessWidget {
         break;
       case (HomeListViewItem.MeasureLiner):
         rowText = 'Measure Liner';
-        functionForRowItem = displayEnterLinerScreen; // TODO
+        functionForRowItem = displayMeasureLinerInputScreen; // TODO
         break;
       case (HomeListViewItem.ChangeLinerLocation):
         rowText = 'Change Liner Position';
         functionForRowItem = displaySwapLinerNumbersScreen;
         break;
+      case (HomeListViewItem.AugmentLink):
+        rowText = 'AR Pulping box view';
+        functionForRowItem = openAugmentForLiner;
+        break;
       default:
+        rowText = "";
+        functionForRowItem = empty;
         break;
     }
 
