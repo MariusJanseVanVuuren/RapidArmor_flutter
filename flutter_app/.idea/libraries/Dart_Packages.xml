@@ -2,7 +2,6 @@
   <library name="Dart Packages">
     <CLASSES>
       <root url="file://$USER_HOME$/Flutter/.pub-cache/hosted/pub.dartlang.org/async-2.0.8/lib" />
-      <root url="file://$USER_HOME$/Flutter/.pub-cache/hosted/pub.dartlang.org/barcode_scan-0.0.8/lib" />
       <root url="file://$USER_HOME$/Flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-1.0.4/lib" />
       <root url="file://$USER_HOME$/Flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.2/lib" />
       <root url="file://$USER_HOME$/Flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib" />

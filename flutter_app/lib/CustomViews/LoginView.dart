@@ -11,13 +11,15 @@ class LoginView extends StatelessWidget {
   }
 
   Widget LoginContainer() {
-    var rapidArmorLogo = new AssetImage("Assets/RapidArmorLogo.jpg");
+    var rapidArmorLogo = new AssetImage("assets/RapidArmorLogo.png");
     return Container(
       color: Colors.white,
-      child: ListView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image(image: rapidArmorLogo, width: 200.0, height: 150.0),
-          MyCustomForm()
+          Image(image: rapidArmorLogo),
+          Padding(padding: EdgeInsets.only(top: 50), child: MyCustomForm())
         ],
       ),
     );
@@ -58,7 +60,6 @@ class MyCustomFormState extends State<MyCustomForm> {
         padding: const EdgeInsets.all(8.0),
         child: raisedButtonContent());
 
-
     return Form(
         key: _formKey,
         child: Column(
@@ -72,9 +73,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                    padding: EdgeInsets.all(50.0),
-                    child: loginButton)
+                Padding(padding: EdgeInsets.all(50.0), child: loginButton)
               ],
             )
           ],
@@ -85,7 +84,8 @@ class MyCustomFormState extends State<MyCustomForm> {
     if (isLoading == true) {
       return new Center(child: new CircularProgressIndicator());
     } else {
-      return new Center(child: Text("Login"));
+      return new Center(
+          child: Text("Login", style: TextStyle(color: Colors.white)));
     }
   }
 
@@ -94,9 +94,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     http.Response response =
     await loginRequest(userNameController.text, passwordController.text);
     if (response.statusCode == 200) {
-      Navigator.pop(
-          context
-      );
+      Navigator.pop(context);
     } else {
       updateState(false);
       _showDialog("Login Failed", "Please check you username and passord");
@@ -132,4 +130,3 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 }
-
