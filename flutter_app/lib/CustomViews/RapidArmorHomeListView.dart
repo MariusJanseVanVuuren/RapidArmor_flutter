@@ -36,11 +36,11 @@ class _HomeListViewState extends State<RapidArmorHomeListView> {
     for (HomeListViewItem rowItem in rowItems) {
       widgets.add(CustomListTile(rowItem: rowItem));
     }
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red[400],
           title: Text('Rapid Armor'),
+          actions: <Widget>[FlatButton(onPressed: logout, child: Text("Logout", style: TextStyle(fontSize: 18, color: Colors.white)))],
         ),
         body: ListView(
           children: widgets,
@@ -56,6 +56,11 @@ class _HomeListViewState extends State<RapidArmorHomeListView> {
             builder: (context) => LoginView()),
       );
     }
+  }
+
+  void logout() {
+    secureStorage().delete(key: "token");
+    showLoginIfRequired();
   }
 
 }

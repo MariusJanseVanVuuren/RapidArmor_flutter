@@ -92,12 +92,12 @@ class MyCustomFormState extends State<MyCustomForm> {
   void performLoginAction() async {
     updateState(true);
     http.Response response =
-    await loginRequest(userNameController.text, passwordController.text);
+    await loginRequest(userNameController.text.trim(), passwordController.text);
     if (response.statusCode == 200) {
       Navigator.pop(context);
     } else {
       updateState(false);
-      _showDialog("Login Failed", "Please check you username and passord");
+      _showDialog("Login Failed", "Please check you username and password");
     }
   }
 
